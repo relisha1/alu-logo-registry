@@ -85,10 +85,3 @@ alu-logo.png                     the logo file that was hashed
 - `ALULogoToken` uses 0 decimals, so 1 token = 1 share. This keeps `ownershipPercentage` simple (500,000 tokens returns 50).
 - There is no mint function after the constructor, so the supply can never go above 1,000,000.
 
-## Problems I ran into
-
-- **Logo file type.** The logo I downloaded from the ALU website was saved as `alu-logo.png`, but it is really a WebP image (the website serves WebP). I kept the original file unchanged so the hash matches what ALU publishes, and registered it with the file type `image/webp` instead of `image/png`.
-- **Two "Documents" folders.** My project ended up in `C:\Users\Elisha\Documents` while File Explorer was showing `OneDrive\Documents`. I moved the project next to the logo in the OneDrive folder.
-- **`Function "mcopy" not found` when compiling.** The latest OpenZeppelin 5.x uses the `mcopy` opcode, which only exists from the Cancun EVM upgrade. Hardhat was compiling for an older EVM version, so I added `evmVersion: "cancun"` to the Solidity settings in `hardhat.config.js`.
-- **New VS Code terminal couldn't find `npx`.** VS Code was opened before Node was added to my PATH, so new terminals didn't see it. I added it to the current terminal with `$env:Path += ";$HOME\nodejs\node-v22.17.1-win-x64"`, and restarting VS Code fixes it for good.
-- **`npm` not recognised / scripts disabled in PowerShell.** Node.js wasn't installed and the Windows Installer service was broken, so I used the Node.js zip version and added it to my PATH. Then I ran `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` so PowerShell would allow `npm` to run.
