@@ -1,6 +1,6 @@
 # ALU Logo Registry
 
-This project protects the official ALU logo using a local Ethereum blockchain. It has two contracts. `ALUAssetRegistry` is an ERC-721 (NFT) contract that stores the SHA-256 hash of the logo file, who registered it and when. Anyone can hash their own copy of the logo and check it against the stored hash to see if it is the real one. `ALULogoToken` is an ERC-20 contract that splits ownership of the logo into 1,000,000 ALUT tokens (shares). The NFT proves *which file* is the official logo, and the tokens show *who owns how much* of it.
+This project protects the official ALU logo on Ethereum. I built and tested it on a local Hardhat blockchain and also deployed it to the Sepolia testnet. It has two contracts. `ALUAssetRegistry` is an ERC-721 (NFT) contract that stores the SHA-256 hash of the logo file, who registered it and when. Anyone can hash their own copy of the logo and check it against the stored hash to see if it is the real one. `ALULogoToken` is an ERC-20 contract that splits ownership of the logo into 1,000,000 ALUT tokens (shares). The NFT proves *which file* is the official logo, and the tokens show *who owns how much* of it.
 
 ## ALU logo hash
 
@@ -42,7 +42,7 @@ Remix settings: compiler 0.8.24, EVM version cancun, optimization on (200 runs).
 1. Install Node.js (v18 or newer) from nodejs.org.
 2. Clone the repo and go into the folder:
    ```bash
-   git clone <your-repo-link>
+   git clone https://github.com/relisha1/alu-logo-registry.git
    cd alu-logo-registry
    ```
 3. Install dependencies:
