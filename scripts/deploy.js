@@ -41,6 +41,11 @@ async function main() {
   const balance = await token.balanceOf(deployer.address);
   console.log("Deployer ALUT balance:", balance.toString());
   console.log("Deployer ownership %:", (await token.ownershipPercentage(deployer.address)).toString());
+
+  // the dApp needs these two addresses in frontend/js/config.js
+  console.log("\nFor the frontend config:");
+  console.log("registryAddress:", await registry.getAddress());
+  console.log("tokenAddress:", await token.getAddress());
 }
 
 main().catch((error) => {

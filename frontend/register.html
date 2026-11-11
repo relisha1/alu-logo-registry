@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register a Logo - ALU Logo Registry</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">ALU Logo Registry</div>
+    <nav>
+      <a href="index.html">Verify a Logo</a>
+      <a href="register.html" class="active">Register</a>
+      <a href="dashboard.html">Token Dashboard</a>
+    </nav>
+    <div id="wallet-box"></div>
+  </header>
+  <div id="wallet-message" hidden></div>
+
+  <main>
+    <h1>Register a logo</h1>
+    <p>Upload an image, check its hash, then register it on the blockchain as an NFT.
+      You need to connect your wallet to register.</p>
+
+    <div class="card">
+      <h2>1. Choose the file</h2>
+      <input type="file" id="file-input" accept="image/*">
+      <br>
+      <img id="preview" class="preview" hidden alt="Logo preview">
+      <p id="hash-text" class="hash" hidden></p>
+    </div>
+
+    <div class="card">
+      <h2>2. Register it</h2>
+      <form id="register-form">
+        <label for="content-hash">Content hash (bytes32)</label>
+        <input type="text" id="content-hash" readonly placeholder="Choose a file first">
+
+        <label for="asset-name">Asset name</label>
+        <input type="text" id="asset-name" placeholder="ALU Official Logo 2026">
+
+        <label for="file-type">File type</label>
+        <input type="text" id="file-type" placeholder="PNG">
+
+        <br><br>
+        <button type="submit" id="register-btn" class="btn" disabled>Register on the blockchain</button>
+      </form>
+      <div id="status"></div>
+    </div>
+  </main>
+
+  <script src="js/ethers.umd.min.js"></script>
+  <script src="js/abi.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/dapp.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

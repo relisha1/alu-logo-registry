@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify a Logo - ALU Logo Registry</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">ALU Logo Registry</div>
+    <nav>
+      <a href="index.html" class="active">Verify a Logo</a>
+      <a href="register.html">Register</a>
+      <a href="dashboard.html">Token Dashboard</a>
+    </nav>
+    <div id="wallet-box"></div>
+  </header>
+  <div id="wallet-message" hidden></div>
+
+  <main>
+    <h1>Is this the real ALU logo?</h1>
+    <p>Upload a logo you received and we'll check it against the official ALU logo stored on the blockchain.
+      You don't need a wallet to use this page.</p>
+
+    <div class="card">
+      <h2>Check a file</h2>
+      <input type="file" id="file-input" accept="image/*">
+      <br>
+      <img id="preview" class="preview" hidden alt="Logo preview">
+    </div>
+
+    <div class="card">
+      <h2>Or check a hash</h2>
+      <p class="muted">If someone gave you the SHA-256 hash of the logo instead of the file, paste it here.</p>
+      <div class="row">
+        <input type="text" id="hash-input" placeholder="Paste a SHA-256 hash">
+        <button id="hash-btn" class="btn">Check</button>
+      </div>
+    </div>
+
+    <div id="result"></div>
+  </main>
+
+  <script src="js/ethers.umd.min.js"></script>
+  <script src="js/abi.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/dapp.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/verify.js"></script>
+</body>
+</html>

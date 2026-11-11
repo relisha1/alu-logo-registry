@@ -4,6 +4,7 @@ const { loadFixture } = require("@nomicfoundation/hardhat-toolbox/network-helper
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const dapp = require("../frontend/js/dapp.js");
 
 // Hash of the real ALU logo in the project folder
 const LOGO_HASH =
@@ -116,6 +117,64 @@ describe("ALU Logo Protection", function () {
       expect(await token.ownershipPercentage(faculty.address)).to.equal(50n);
       expect(await token.ownershipPercentage(student.address)).to.equal(10n);
       expect(await token.ownershipPercentage(owner.address)).to.equal(40n);
+    });
+  });
+
+  // ---------- Formative 2: frontend integration ----------
+  // These use the same helper functions as the web pages (frontend/js/dapp.js)
+  describe("Frontend integration", function () {
+    async function deployBoth() {
+      const [owner, faculty] = await ethers.getSigners();
+
+      const Registry = await ethers.getContractFactory("ALUAssetRegistry");
+      const registry = await Registry.deploy();
+      await registry.registerAsset("ALU Official Logo", "image/webp", LOGO_HASH);
+
+      const Token = await ethers.getContractFactory("ALULogoToken");
+      const token = await Token.deploy(owner.address);
+
+      return { registry, token, owner, faculty };
+    }
+
+    it("9. reads the total ALUT supply and shows 1,000,000", async function () {
+      const { token } = await loadFixture(deployBoth);
+
+      const text = await dapp.getTotalSupplyText(token);
+      expect(text).to.equal("1,000,000");
+    });
+
+    it("10. hashes a file into the right bytes32 SHA-256 value", async function () {
+      const file = fs.readFileSync(path.join(__dirname, "..", "alu-logo.png"));
+
+      const hash = await dapp.hashFile(file);
+      expect(hash).to.match(/^0x[0-9a-f]{64}$/);
+      expect(hash).to.equal(LOGO_HASH);
+    });
+
+    it("11. shows a success result for the correct logo hash", async function () {
+      const { registry, owner } = await loadFixture(deployBoth);
+
+      const result = await dapp.checkLogo(registry, 1, LOGO_HASH);
+      expect(result.authentic).to.equal(true);
+      expect(result.title).to.equal("Logo Verified: This is the authentic ALU logo");
+      expect(result.details.name).to.equal("ALU Official Logo");
+      expect(result.details.registeredBy).to.equal(owner.address);
+    });
+
+    it("12. shows a failure result for a wrong hash", async function () {
+      const { registry } = await loadFixture(deployBoth);
+
+      const result = await dapp.checkLogo(registry, 1, FAKE_HASH);
+      expect(result.authentic).to.equal(false);
+      expect(result.title).to.equal("Warning: This logo has been modified.");
+    });
+
+    it("13. distributeShares updates the recipient's balance", async function () {
+      const { token, faculty } = await loadFixture(deployBoth);
+
+      await dapp.sendShares(token, faculty.address, 250000);
+      expect(await token.balanceOf(faculty.address)).to.equal(250000n);
+      expect(await token.ownershipPercentage(faculty.address)).to.equal(25n);
     });
   });
 });

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Dashboard - ALU Logo Registry</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">ALU Logo Registry</div>
+    <nav>
+      <a href="index.html">Verify a Logo</a>
+      <a href="register.html">Register</a>
+      <a href="dashboard.html" class="active">Token Dashboard</a>
+    </nav>
+    <div id="wallet-box"></div>
+  </header>
+  <div id="wallet-message" hidden></div>
+
+  <main>
+    <h1>ALUT Token Dashboard</h1>
+    <p>Each ALUT token is one ownership share of the ALU logo.</p>
+
+    <div class="card">
+      <h2>Overview</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="muted">Total supply</div>
+          <div class="value" id="total-supply">...</div>
+        </div>
+        <div class="stat">
+          <div class="muted">Your balance</div>
+          <div class="value" id="my-balance">-</div>
+        </div>
+        <div class="stat">
+          <div class="muted">Your ownership</div>
+          <div class="value" id="my-percent">-</div>
+        </div>
+      </div>
+      <p id="connect-hint" class="muted">Connect your wallet to see your own balance.</p>
+    </div>
+
+    <div class="card">
+      <h2>Who owns the logo</h2>
+      <table>
+        <thead>
+          <tr><th>Holder</th><th>Wallet</th><th>ALUT</th><th>Ownership</th></tr>
+        </thead>
+        <tbody id="holders"></tbody>
+      </table>
+      <p class="muted">Percentages are whole numbers, so anything under 1% shows as 0%.</p>
+
+      <label for="lookup-input">Check any wallet</label>
+      <div class="row">
+        <input type="text" id="lookup-input" placeholder="0x...">
+        <button id="lookup-btn" class="btn">Add</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Distribute shares (owner only)</h2>
+      <p id="owner-note" class="muted"></p>
+      <form id="distribute-form">
+        <label for="recipient">Recipient wallet address</label>
+        <input type="text" id="recipient" placeholder="0x...">
+
+        <label for="amount">Amount of ALUT</label>
+        <input type="number" id="amount" min="1" step="1" placeholder="100000">
+
+        <br><br>
+        <button type="submit" id="distribute-btn" class="btn" disabled>Send shares</button>
+      </form>
+      <div id="status"></div>
+    </div>
+  </main>
+
+  <script src="js/ethers.umd.min.js"></script>
+  <script src="js/abi.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/dapp.js"></script>
+  <script src="js/wallet.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
